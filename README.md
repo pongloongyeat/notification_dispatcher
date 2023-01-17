@@ -24,7 +24,7 @@ class YourClass {
 void main() {
   final yourClass = YourClass()..init();
   NotificationDispatcher.instance.post(name: 'increment');
-  print(yourClass.count);     // Prints 1
+  print(yourClass.count); // Prints 1
   yourClass.dispose();
 }
 ```
@@ -80,9 +80,3 @@ class _AppState extends State<App> {
   }
 }
 ```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
