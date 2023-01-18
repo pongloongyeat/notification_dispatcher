@@ -1,5 +1,17 @@
 Inspired by Apple's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter). Passes information around to registered observers.
 
+[![Build status](https://github.com/pongloongyeat/notification_dispatcher/actions/workflows/dart.yaml/badge.svg)](https://github.com/pongloongyeat/notification_dispatcher/actions/workflows/dart.yaml)
+[![Pub package](https://img.shields.io/pub/v/notification_dispatcher.svg)](https://pub.dev/packages/notification_dispatcher)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+## Installing
+
+Add the following line to your `pubspec.yaml` file.
+
+```yaml
+notification_dispatcher: ^0.0.1
+```
+
 ## Usage
 
 ```dart
