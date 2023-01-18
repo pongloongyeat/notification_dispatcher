@@ -14,12 +14,20 @@ class NotificationMessage {
   final Map<String, dynamic>? info;
 }
 
+/// The [NotificationDispatcher] class. Passes information around
+/// to registered observers. The class comes with a default instance
+/// named [NotificationDispatcher.instance].
 class NotificationDispatcher {
   NotificationDispatcher._();
 
+  /// The current instance of [NotificationDispatcher].
   static final instance = NotificationDispatcher._();
   final _observers = <Object, Map<String, NotificationCallback>>{};
 
+  /// Adds an observer. Because of [removeObserver] and [remove],
+  /// make sure that the == operator for [observer] returns true
+  /// if and only if the compared object is the same object (which
+  /// is the default behaviour for Dart).
   void addObserver(
     Object observer, {
     required String name,
@@ -34,17 +42,24 @@ class NotificationDispatcher {
   }
 
   /// Removes all callbacks associated with [observer].
+  /// Make sure that the == operator for [observer] returns true
+  /// if and only if the compared object is the same object (which
+  /// is the default behaviour for Dart).
   void removeObserver(Object observer) {
     _observers.removeWhere((key, _) => key == observer);
   }
 
   /// Removes all callbacks associated with [observer] and [name].
+  /// Make sure that the == operator for [observer] returns true
+  /// if and only if the compared object is the same object (which
+  /// is the default behaviour for Dart).
   void remove({required Object observer, required String name}) {
     if (!_observers.containsKey(observer)) return;
     _observers[observer]!.removeWhere((key, _) => key == name);
   }
 
   /// Posts a notification, running all callbacks registered
+  /// with [name] while passing an optional [sender] and [info].
   void post({
     Object? sender,
     required String name,
