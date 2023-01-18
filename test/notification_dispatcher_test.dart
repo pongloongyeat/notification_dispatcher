@@ -3,26 +3,27 @@ import 'package:test/test.dart';
 
 class TestHelper {}
 
-class AnotherTestHelper extends TestHelper {}
-
 void main() {
   group('NotificationDispatcher', () {
+    final instance = TestHelper();
+    final anotherInstance = TestHelper();
+
     const observerName = 'name';
     const observerName2 = '${observerName}2';
 
     test('adds an observer on addObserver', () {
       MockNotificationDispatcher.instance.addObserver(
-        observer: TestHelper,
+        instance,
         name: observerName,
-        callback: () {},
+        callback: (_) {},
       );
 
       expect(
-        MockNotificationDispatcher.instance.observers.containsKey(TestHelper),
+        MockNotificationDispatcher.instance.observers.containsKey(instance),
         true,
       );
       expect(
-        MockNotificationDispatcher.instance.observers[TestHelper]
+        MockNotificationDispatcher.instance.observers[instance]
             ?.containsKey(observerName),
         true,
       );
@@ -33,23 +34,23 @@ void main() {
     test('is able to add multiple observers', () {
       MockNotificationDispatcher.instance
         ..addObserver(
-          observer: TestHelper,
+          instance,
           name: observerName,
-          callback: () {},
+          callback: (_) {},
         )
         ..addObserver(
-          observer: AnotherTestHelper,
+          anotherInstance,
           name: observerName2,
-          callback: () {},
+          callback: (_) {},
         );
 
       expect(
-        MockNotificationDispatcher.instance.observers[TestHelper]
+        MockNotificationDispatcher.instance.observers[instance]
             ?.containsKey(observerName),
         true,
       );
       expect(
-        MockNotificationDispatcher.instance.observers[AnotherTestHelper]
+        MockNotificationDispatcher.instance.observers[anotherInstance]
             ?.containsKey(observerName2),
         true,
       );
@@ -61,16 +62,16 @@ void main() {
 
       MockNotificationDispatcher.instance
         ..addObserver(
-          observer: TestHelper,
+          instance,
           name: observerName,
-          callback: () => callCount++,
+          callback: (_) => callCount++,
         )
         ..addObserver(
-          observer: TestHelper,
+          instance,
           name: observerName2,
-          callback: () => callCount += 2,
+          callback: (_) => callCount += 2,
         )
-        ..removeObserver(TestHelper)
+        ..removeObserver(instance)
         ..post(name: observerName)
         ..post(name: observerName2);
 
@@ -83,16 +84,16 @@ void main() {
 
       MockNotificationDispatcher.instance
         ..addObserver(
-          observer: TestHelper,
+          instance,
           name: observerName,
-          callback: () => callCount++,
+          callback: (_) => callCount++,
         )
         ..addObserver(
-          observer: AnotherTestHelper,
+          anotherInstance,
           name: observerName2,
-          callback: () => callCount += 2,
+          callback: (_) => callCount += 2,
         )
-        ..remove(observer: AnotherTestHelper, name: observerName2)
+        ..remove(observer: anotherInstance, name: observerName2)
         ..post(name: observerName)
         ..post(name: observerName2);
 
@@ -105,11 +106,11 @@ void main() {
 
       MockNotificationDispatcher.instance
         ..addObserver(
-          observer: TestHelper,
+          instance,
           name: observerName,
-          callback: () => callCount++,
+          callback: (message) => callCount = message.info!['callCount'] as int,
         )
-        ..post(name: observerName);
+        ..post(name: observerName, info: {'callCount': 1});
 
       expect(callCount, 1);
       MockNotificationDispatcher.instance.clearAll();

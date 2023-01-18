@@ -5,9 +5,9 @@ class YourClass {
 
   void init() {
     NotificationDispatcher.instance.addObserver(
-      observer: YourClass,
+      this,
       name: 'observerName',
-      callback: () => count++,
+      callback: (_) => count++,
     );
   }
 

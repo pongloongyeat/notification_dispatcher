@@ -10,9 +10,9 @@ class YourClass {
 
   void init() {
     NotificationDispatcher.instance.addObserver(
-      observer: YourClass,
-      name: 'increment',
-      callback: () => count++,
+      this,
+      name: 'observerName',
+      callback: (_) => count++,
     );
   }
 
@@ -23,8 +23,8 @@ class YourClass {
 
 void main() {
   final yourClass = YourClass()..init();
-  NotificationDispatcher.instance.post(name: 'increment');
-  print(yourClass.count); // Prints 1
+  NotificationDispatcher.instance.post(name: 'observerName');
+  print(yourClass.count); // 1
   yourClass.dispose();
 }
 ```
@@ -45,15 +45,15 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     NotificationDispatcher.instance.addObserver(
-      observer: _AppState,
+      this,
       name: 'observerName',
-      callback: () => setState(() => count++),
+      callback: (_) => setState(() => count++),
     );
   }
 
   @override
   void dispose() {
-    NotificationDispatcher.instance.removeObserver(_AppState);
+    NotificationDispatcher.instance.removeObserver(this);
     super.dispose();
   }
 
