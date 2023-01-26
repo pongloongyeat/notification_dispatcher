@@ -10,10 +10,6 @@ class YourClass {
       callback: (_) => count++,
     );
   }
-
-  void dispose() {
-    NotificationDispatcher.instance.removeObserver(YourClass);
-  }
 }
 
 void main() {
@@ -21,5 +17,4 @@ void main() {
   NotificationDispatcher.instance.post(name: 'observerName');
 
   print(yourClass.count); // 1
-  yourClass.dispose();
 }

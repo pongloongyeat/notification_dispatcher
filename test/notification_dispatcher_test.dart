@@ -1,12 +1,29 @@
+import 'package:equatable/equatable.dart';
 import 'package:notification_dispatcher/src/notification_dispatcher.dart';
 import 'package:test/test.dart';
 
-class TestHelper {}
+class TestHelper {
+  TestHelper(this.name);
+
+  final String name;
+}
+
+class EquatableTestHelper extends Equatable
+    with NotificationDispatcherEquatableObserverMixin {
+  EquatableTestHelper(this.name);
+
+  final String name;
+
+  @override
+  List<Object?> get props => [name, instanceKey];
+}
 
 void main() {
   group('NotificationDispatcher', () {
-    final instance = TestHelper();
-    final anotherInstance = TestHelper();
+    final instance = TestHelper('1');
+    final anotherInstance = TestHelper('1');
+    final equatableInstance = EquatableTestHelper('1');
+    final anotherEquatableInstance = EquatableTestHelper('1');
 
     const observerName = 'name';
     const observerName2 = '${observerName}2';
@@ -42,6 +59,16 @@ void main() {
           anotherInstance,
           name: observerName2,
           callback: (_) {},
+        )
+        ..addObserver(
+          equatableInstance,
+          name: observerName,
+          callback: (_) {},
+        )
+        ..addObserver(
+          anotherEquatableInstance,
+          name: observerName2,
+          callback: (_) {},
         );
 
       expect(
@@ -54,6 +81,17 @@ void main() {
             ?.containsKey(observerName2),
         true,
       );
+      expect(
+        MockNotificationDispatcher.instance.observers[equatableInstance]
+            ?.containsKey(observerName),
+        true,
+      );
+      expect(
+        MockNotificationDispatcher.instance.observers[anotherEquatableInstance]
+            ?.containsKey(observerName2),
+        true,
+      );
+      expect(MockNotificationDispatcher.instance.observers.keys.length, 4);
     });
 
     test('removes all callbacks associated with observer on removeObserver',
@@ -79,6 +117,75 @@ void main() {
       MockNotificationDispatcher.instance.clearAll();
     });
 
+    test(
+        'removes all callbacks associated with observer on removeObserver '
+        'given multiple registered observers of the same class', () {
+      var callCount = 0;
+
+      MockNotificationDispatcher.instance
+        ..addObserver(
+          instance,
+          name: observerName,
+          callback: (_) => callCount++,
+        )
+        ..addObserver(
+          instance,
+          name: observerName2,
+          callback: (_) => callCount += 2,
+        )
+        ..addObserver(
+          anotherInstance,
+          name: observerName,
+          callback: (_) => callCount += 3,
+        )
+        ..addObserver(
+          anotherInstance,
+          name: observerName2,
+          callback: (_) => callCount += 4,
+        )
+        ..removeObserver(anotherInstance)
+        ..post(name: observerName)
+        ..post(name: observerName2);
+
+      expect(callCount, 3);
+      MockNotificationDispatcher.instance.clearAll();
+    });
+
+    test(
+        'removes all callbacks associated with observer on removeObserver '
+        'given multiple registered observers of the same class with '
+        'extends Equatable', () {
+      var callCount = 0;
+
+      MockNotificationDispatcher.instance
+        ..addObserver(
+          equatableInstance,
+          name: observerName,
+          callback: (_) => callCount++,
+        )
+        ..addObserver(
+          equatableInstance,
+          name: observerName2,
+          callback: (_) => callCount += 2,
+        )
+        ..addObserver(
+          anotherEquatableInstance,
+          name: observerName,
+          callback: (_) => callCount += 3,
+        )
+        ..addObserver(
+          anotherEquatableInstance,
+          name: observerName2,
+          callback: (_) => callCount += 4,
+        )
+        ..removeObserver(anotherEquatableInstance)
+        ..post(name: observerName)
+        ..post(name: observerName2);
+
+      expect(callCount, 3);
+      MockNotificationDispatcher.instance.clearAll();
+    });
+
     test('is able to remove a specific callback on remove', () {
       var callCount = 0;
 
@@ -89,11 +196,11 @@ void main() {
           callback: (_) => callCount++,
         )
         ..addObserver(
-          anotherInstance,
+          instance,
           name: observerName2,
           callback: (_) => callCount += 2,
         )
-        ..remove(observer: anotherInstance, name: observerName2)
+        ..remove(observer: instance, name: observerName2)
         ..post(name: observerName)
         ..post(name: observerName2);
 

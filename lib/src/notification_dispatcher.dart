@@ -1,5 +1,12 @@
 typedef NotificationCallback = void Function(NotificationMessage);
 
+/// An optional mixin to ensure [NotificationDispatcher] works with
+/// Equatable. To use, make sure [instanceKey] is part of your
+/// Equatable class's props property.
+mixin NotificationDispatcherEquatableObserverMixin {
+  final instanceKey = DateTime.now().microsecondsSinceEpoch;
+}
+
 /// The class used to store a notification's payload.
 class NotificationMessage {
   const NotificationMessage({
@@ -24,10 +31,7 @@ class NotificationDispatcher {
   static final instance = NotificationDispatcher._();
   final _observers = <Object, Map<String, NotificationCallback>>{};
 
-  /// Adds an observer. Because of [removeObserver] and [remove],
-  /// make sure that the == operator for [observer] returns true
-  /// if and only if the compared object is the same object (which
-  /// is the default behaviour for Dart).
+  /// Adds an observer with its registered callback.
   void addObserver(
     Object observer, {
     required String name,
@@ -41,18 +45,15 @@ class NotificationDispatcher {
     _observers[observer] = {name: callback};
   }
 
-  /// Removes all callbacks associated with [observer].
-  /// Make sure that the == operator for [observer] returns true
-  /// if and only if the compared object is the same object (which
-  /// is the default behaviour for Dart).
+  /// Removes all callbacks associated to the same reference/instance
+  /// as [observer] as when it was registered when calling [addObserver].
   void removeObserver(Object observer) {
-    _observers.removeWhere((key, _) => key == observer);
+    _observers.removeWhere((key, _) => identical(key, observer));
   }
 
-  /// Removes all callbacks associated with [observer] and [name].
-  /// Make sure that the == operator for [observer] returns true
-  /// if and only if the compared object is the same object (which
-  /// is the default behaviour for Dart).
+  /// Removes all callbacks associated to the same reference/instance
+  /// as [observer] as when it was registered when calling [addObserver]
+  /// with [name].
   void remove({required Object observer, required String name}) {
     if (!_observers.containsKey(observer)) return;
     _observers[observer]!.removeWhere((key, _) => key == name);
