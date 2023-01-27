@@ -1,3 +1,8 @@
+## 0.2.1
+
+### Others
+- Updated license.
+
 ## 0.2.0
 
 ### Features
