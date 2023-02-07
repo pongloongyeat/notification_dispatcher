@@ -9,7 +9,7 @@ Inspired by Apple's [NotificationCenter](https://developer.apple.com/documentati
 Add the following line to your `pubspec.yaml` file.
 
 ```yaml
-notification_dispatcher: ^0.3.0
+notification_dispatcher: ^0.3.1
 ```
 
 ## Flutter Example

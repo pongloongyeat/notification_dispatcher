@@ -7,7 +7,12 @@
 ### Others
  -->
 
-## 0.3.0
+## 0.3.1
+
+### Fix
+- Fix failing tests due to `Future`s running concurrently.
+
+## 0.3.0 (retracted)
 
 ### Features
 - Allow callbacks that return a `Future`.
