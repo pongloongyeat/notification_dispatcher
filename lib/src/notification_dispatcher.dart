@@ -1,4 +1,6 @@
-typedef NotificationCallback = void Function(NotificationMessage);
+import 'dart:async';
+
+typedef NotificationCallback = FutureOr<void> Function(NotificationMessage);
 
 /// An optional mixin to ensure [NotificationDispatcher] works with
 /// Equatable. To use, make sure [instanceKey] is part of your
@@ -61,13 +63,14 @@ class NotificationDispatcher {
 
   /// Posts a notification, running all callbacks registered
   /// with [name] while passing an optional [sender] and [info].
-  void post({
+  Future<void> post({
     Object? sender,
     required String name,
     Map<String, dynamic>? info,
-  }) {
+  }) async {
     for (final callback in _observers.values) {
-      callback[name]?.call(NotificationMessage(sender: sender, info: info));
+      await callback[name]
+          ?.call(NotificationMessage(sender: sender, info: info));
     }
   }
 }
