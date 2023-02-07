@@ -1,20 +1,15 @@
-Inspired by Apple's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter). Passes information around to registered observers.
-
 [![Build status](https://github.com/pongloongyeat/notification_dispatcher/actions/workflows/dart.yaml/badge.svg)](https://github.com/pongloongyeat/notification_dispatcher/actions/workflows/dart.yaml)
 [![Pub package](https://img.shields.io/pub/v/notification_dispatcher.svg)](https://pub.dev/packages/notification_dispatcher)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Use-cases
-- Very simple state management.
-- Refreshing data in another page/widget without `BuildContext`.
-- Forcefully kicking the user out of their session if their session has expired.
+Inspired by Apple's [NotificationCenter](https://developer.apple.com/documentation/foundation/notificationcenter). Passes information around to registered observers.
 
 ## Installing
 
 Add the following line to your `pubspec.yaml` file.
 
 ```yaml
-notification_dispatcher: ^0.2.1
+notification_dispatcher: ^0.3.0
 ```
 
 ## Flutter Example

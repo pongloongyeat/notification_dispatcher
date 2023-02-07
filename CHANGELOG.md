@@ -1,3 +1,17 @@
+<!-- 
+### Features
+### Fixes
+### Documenetation
+### Workflow
+### Tests
+### Others
+ -->
+
+## 0.3.0
+
+### Features
+- Allow callbacks that return a `Future`.
+
 ## 0.2.1
 
 ### Others
