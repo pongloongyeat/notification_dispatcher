@@ -7,7 +7,15 @@
 ### Others
  -->
 
-## 0.3.1
+## 0.3.2
+
+### Fix
+- Fix an issue where calling `NotificationDispatcher.post` could return earlier than intended.
+
+### Tests
+- Added tests for Future callbacks.
+
+## 0.3.1 (retracted)
 
 ### Fix
 - Fix failing tests due to `Future`s running concurrently.
