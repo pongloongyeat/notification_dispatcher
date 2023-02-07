@@ -69,9 +69,10 @@ class NotificationDispatcher {
     Map<String, dynamic>? info,
   }) async {
     for (final callback in _observers.values) {
-      await callback[name]
-          ?.call(NotificationMessage(sender: sender, info: info));
+      callback[name]?.call(NotificationMessage(sender: sender, info: info));
     }
+
+    return;
   }
 }
 
