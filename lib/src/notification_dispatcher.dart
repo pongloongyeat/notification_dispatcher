@@ -59,9 +59,8 @@ class NotificationDispatcher {
   /// Removes all callbacks associated to the same reference/instance
   /// as [observer] as when it was registered when calling [addObserver]
   /// with [name].
-  void remove({required Object observer, required String name}) {
-    if (!_observers.containsKey(observer)) return;
-    _observers[observer]!.removeWhere((key, _) => key == name);
+  void removeObserverWith(Object observer, {required String name}) {
+    _observers[observer]?.removeWhere((key, _) => key == name);
   }
 
   /// Posts a notification, running all callbacks registered

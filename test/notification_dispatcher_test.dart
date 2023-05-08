@@ -134,7 +134,7 @@ void main() {
           name: observerName2,
           callback: (_) => callCount += 2,
         )
-        ..remove(observer: instance, name: observerName2)
+        ..removeObserverWith(instance, name: observerName2)
         ..post(name: observerName)
         ..post(name: observerName2);
 
