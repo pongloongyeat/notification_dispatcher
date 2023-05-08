@@ -1,11 +1,27 @@
-<!-- 
+<!--
+### Breaking
 ### Features
 ### Fixes
 ### Documenetation
 ### Workflow
 ### Tests
 ### Others
- -->
+-->
+
+## 0.4.0
+
+### Breaking
+- Removed support for [Equatable](https://pub.dev/packages/equatable).
+- Removed support for `Future`-based callbacks.
+- Removed `MockNotificationDispatcher`
+- `remove` has been renamed to `removeObserverWith` with the `Object observer` parameter made positional.
+
+### Documentation
+- Updated documentation for `removeObserver` and `removeObserverWith` (previously called `remove`).
+
+### Others
+
+- Updated example to use Flutter.
 
 ## 0.3.2
 

@@ -9,84 +9,89 @@ Inspired by Apple's [NotificationCenter](https://developer.apple.com/documentati
 Add the following line to your `pubspec.yaml` file.
 
 ```yaml
-notification_dispatcher: ^0.3.2
+notification_dispatcher: ^0.4.0
 ```
 
 ## Flutter Example
 ```dart
-void main() {
-  runApp(const App());
-}
-
-class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<App> createState() => _AppState();
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'Flutter Demo',
+      home: MyHomePage(),
+    );
+  }
 }
 
-class _AppState extends State<App> {
-  int _count = 0;
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
 
   @override
   void initState() {
     super.initState();
+
+    // Add this instance as an observer and call _incrementCounter when we
+    // receive a notification with the name 'increment'.
     NotificationDispatcher.instance.addObserver(
       this,
-      name: 'observerName',
-      callback: (_) => _incrementCount(),
+      name: 'increment',
+      callback: (_) => _incrementCounter(),
     );
   }
 
   @override
   void dispose() {
+    // Make sure to remove this instance as an observer to prevent callbacks
+    // from running if we receive a notification with the name 'increment'.
     NotificationDispatcher.instance.removeObserver(this);
     super.dispose();
   }
 
-  void _incrementCount() {
+  void _incrementCounter() {
     setState(() {
-      _count++;
+      _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_count',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('NotificationDispatcher Demo'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              NotificationDispatcher.instance.post(name: 'observerName'),
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        // Post a notification with the name 'increment' to fire our
+        // _incrementCounter callback.
+        onPressed: () =>
+            NotificationDispatcher.instance.post(name: 'increment'),
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }
-}
-```
-
-## Equatable
-
-To set an [Equatable](https://pub.dev/packages/equatable)-extended class as an observer, use the `NotificationDispatcherEquatableObserverMixin` mixin and add the `instanceKey` property to its `props` property.
-
-```dart
-class SomeClass extends Equatable with NotificationDispatcherEquatableObserverMixin {
-  @override
-  List<Object?> get props => [...super.props, instanceKey];
 }
 ```
