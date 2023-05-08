@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:notification_dispatcher/src/notification_dispatcher.dart';
 import 'package:test/test.dart';
 
@@ -155,30 +153,6 @@ void main() {
         ..post(name: observerName, info: {'callCount': 1});
 
       expect(callCount, 1);
-    });
-
-    test('calls futures on post', () async {
-      var callCount = 0;
-      const delay = Duration(milliseconds: 100);
-
-      MockNotificationDispatcher.instance.addObserver(
-        instance,
-        name: observerName,
-        callback: (_) async => Future.delayed(
-          delay,
-          () => callCount++,
-        ),
-      );
-
-      unawaited(MockNotificationDispatcher.instance.post(name: observerName));
-      expect(callCount, 0);
-      await Future.delayed(delay);
-      expect(callCount, 1);
-
-      await MockNotificationDispatcher.instance.post(name: observerName);
-      expect(callCount, 2);
-
-      MockNotificationDispatcher.instance.clearAll();
     });
   });
 }

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 /// Callback signature when receiving a notification.
 typedef NotificationCallback = void Function(NotificationMessage);
 
@@ -68,13 +66,13 @@ class NotificationDispatcher {
 
   /// Posts a notification, running all callbacks registered
   /// with [name] while passing an optional [sender] and [info].
-  Future<void> post({
+  void post({
     Object? sender,
     required String name,
     Map<String, dynamic>? info,
-  }) async {
+  }) {
     for (final callback in _observers.values.toList()) {
-      await callback[name]?.call(
+      callback[name]?.call(
         NotificationMessage(
           sender: sender,
           info: info,
