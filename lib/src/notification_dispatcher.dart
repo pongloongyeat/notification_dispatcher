@@ -1,13 +1,7 @@
 import 'dart:async';
 
-typedef NotificationCallback = FutureOr<void> Function(NotificationMessage);
-
-/// An optional mixin to ensure [NotificationDispatcher] works with
-/// Equatable. To use, make sure [instanceKey] is part of your
-/// Equatable class's props property.
-mixin NotificationDispatcherEquatableObserverMixin {
-  final instanceKey = DateTime.now().microsecondsSinceEpoch;
-}
+/// Callback signature when receiving a notification.
+typedef NotificationCallback = void Function(NotificationMessage);
 
 /// The class used to store a notification's payload.
 class NotificationMessage {
