@@ -25,7 +25,18 @@ class NotificationDispatcher {
 
   /// The current instance of [NotificationDispatcher].
   static final instance = NotificationDispatcher._();
+
   final _observers = <Object, Map<String, NotificationCallback>>{};
+
+  /// The observer map. When filled, it looks like this
+  ///
+  /// {
+  ///   InstanceOfYourObject: {
+  ///     "notificationName": () {},
+  ///   },
+  ///   ...
+  /// }
+  Map<Object, Map<String, NotificationCallback>> get observers => _observers;
 
   /// Adds an observer with its registered callback.
   void addObserver(
@@ -73,13 +84,4 @@ class NotificationDispatcher {
 
     return;
   }
-}
-
-class MockNotificationDispatcher extends NotificationDispatcher {
-  MockNotificationDispatcher._() : super._();
-
-  static final instance = MockNotificationDispatcher._();
-  Map<Object, Map<String, NotificationCallback>> get observers => _observers;
-
-  void clearAll() => _observers.clear();
 }

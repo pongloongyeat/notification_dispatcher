@@ -9,6 +9,8 @@ class TestHelper {
   final String name;
 }
 
+extension on NotificationDispatcher {
+  void clearAll() => observers.clear();
 }
 
 void main() {
@@ -19,28 +21,28 @@ void main() {
     const observerName = 'name';
     const observerName2 = '${observerName}2';
 
+    tearDown(NotificationDispatcher.instance.clearAll);
+
     test('adds an observer on addObserver', () {
-      MockNotificationDispatcher.instance.addObserver(
+      NotificationDispatcher.instance.addObserver(
         instance,
         name: observerName,
         callback: (_) {},
       );
 
       expect(
-        MockNotificationDispatcher.instance.observers.containsKey(instance),
+        NotificationDispatcher.instance.observers.containsKey(instance),
         true,
       );
       expect(
-        MockNotificationDispatcher.instance.observers[instance]
+        NotificationDispatcher.instance.observers[instance]
             ?.containsKey(observerName),
         true,
       );
-
-      MockNotificationDispatcher.instance.clearAll();
     });
 
     test('is able to add multiple observers', () {
-      MockNotificationDispatcher.instance
+      NotificationDispatcher.instance
         ..addObserver(
           instance,
           name: observerName,
@@ -53,23 +55,23 @@ void main() {
         );
 
       expect(
-        MockNotificationDispatcher.instance.observers[instance]
+        NotificationDispatcher.instance.observers[instance]
             ?.containsKey(observerName),
         true,
       );
       expect(
-        MockNotificationDispatcher.instance.observers[anotherInstance]
+        NotificationDispatcher.instance.observers[anotherInstance]
             ?.containsKey(observerName2),
         true,
       );
-      expect(MockNotificationDispatcher.instance.observers.keys.length, 2);
+      expect(NotificationDispatcher.instance.observers.keys.length, 2);
     });
 
     test('removes all callbacks associated with observer on removeObserver',
         () {
       var callCount = 0;
 
-      MockNotificationDispatcher.instance
+      NotificationDispatcher.instance
         ..addObserver(
           instance,
           name: observerName,
@@ -85,7 +87,6 @@ void main() {
         ..post(name: observerName2);
 
       expect(callCount, 0);
-      MockNotificationDispatcher.instance.clearAll();
     });
 
     test(
@@ -93,7 +94,7 @@ void main() {
         'given multiple registered observers of the same class', () {
       var callCount = 0;
 
-      MockNotificationDispatcher.instance
+      NotificationDispatcher.instance
         ..addObserver(
           instance,
           name: observerName,
@@ -119,13 +120,12 @@ void main() {
         ..post(name: observerName2);
 
       expect(callCount, 3);
-      MockNotificationDispatcher.instance.clearAll();
     });
 
     test('is able to remove a specific callback on remove', () {
       var callCount = 0;
 
-      MockNotificationDispatcher.instance
+      NotificationDispatcher.instance
         ..addObserver(
           instance,
           name: observerName,
@@ -141,13 +141,12 @@ void main() {
         ..post(name: observerName2);
 
       expect(callCount, 1);
-      MockNotificationDispatcher.instance.clearAll();
     });
 
     test('calls registered callback on post', () {
       var callCount = 0;
 
-      MockNotificationDispatcher.instance
+      NotificationDispatcher.instance
         ..addObserver(
           instance,
           name: observerName,
@@ -156,7 +155,6 @@ void main() {
         ..post(name: observerName, info: {'callCount': 1});
 
       expect(callCount, 1);
-      MockNotificationDispatcher.instance.clearAll();
     });
 
     test('calls futures on post', () async {
