@@ -19,10 +19,6 @@
 ### Documentation
 - Updated documentation for `removeObserver` and `removeObserverWith` (previously called `remove`).
 
-### Others
-
-- Updated example to use Flutter.
-
 ## 0.3.2
 
 ### Fix
