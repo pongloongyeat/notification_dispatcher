@@ -7,7 +7,7 @@ class YourClass {
     NotificationDispatcher.instance.addObserver(
       this,
       name: 'observerName',
-      callback: (_) => count++,
+      onMessageReceived: (_) => count++,
     );
   }
 

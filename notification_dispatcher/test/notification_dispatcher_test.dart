@@ -21,7 +21,7 @@ void main() {
       NotificationDispatcher.instance.addObserver(
         instance,
         name: observerName,
-        callback: (_) {},
+        onMessageReceived: (_) {},
       );
 
       expect(
@@ -40,12 +40,12 @@ void main() {
         ..addObserver(
           instance,
           name: observerName,
-          callback: (_) {},
+          onMessageReceived: (_) {},
         )
         ..addObserver(
           anotherInstance,
           name: observerName2,
-          callback: (_) {},
+          onMessageReceived: (_) {},
         );
 
       expect(
@@ -69,12 +69,12 @@ void main() {
         ..addObserver(
           instance,
           name: observerName,
-          callback: (_) => callCount++,
+          onMessageReceived: (_) => callCount++,
         )
         ..addObserver(
           instance,
           name: observerName2,
-          callback: (_) => callCount += 2,
+          onMessageReceived: (_) => callCount += 2,
         )
         ..removeObserver(instance)
         ..post(name: observerName)
@@ -92,22 +92,22 @@ void main() {
         ..addObserver(
           instance,
           name: observerName,
-          callback: (_) => callCount++,
+          onMessageReceived: (_) => callCount++,
         )
         ..addObserver(
           instance,
           name: observerName2,
-          callback: (_) => callCount += 2,
+          onMessageReceived: (_) => callCount += 2,
         )
         ..addObserver(
           anotherInstance,
           name: observerName,
-          callback: (_) => callCount += 3,
+          onMessageReceived: (_) => callCount += 3,
         )
         ..addObserver(
           anotherInstance,
           name: observerName2,
-          callback: (_) => callCount += 4,
+          onMessageReceived: (_) => callCount += 4,
         )
         ..removeObserver(anotherInstance)
         ..post(name: observerName)
@@ -123,12 +123,12 @@ void main() {
         ..addObserver(
           instance,
           name: observerName,
-          callback: (_) => callCount++,
+          onMessageReceived: (_) => callCount++,
         )
         ..addObserver(
           instance,
           name: observerName2,
-          callback: (_) => callCount += 2,
+          onMessageReceived: (_) => callCount += 2,
         )
         ..removeObserverWith(instance, name: observerName2)
         ..post(name: observerName)
@@ -144,9 +144,10 @@ void main() {
         ..addObserver(
           instance,
           name: observerName,
-          callback: (message) => callCount = message!['callCount'] as int,
+          onMessageReceived: (message) =>
+              callCount = message!['callCount'] as int,
         )
-        ..post(name: observerName, info: {'callCount': 1});
+        ..post(name: observerName, message: {'callCount': 1});
 
       expect(callCount, 1);
     });

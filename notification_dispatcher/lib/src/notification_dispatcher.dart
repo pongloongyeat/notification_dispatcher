@@ -19,14 +19,14 @@ final class NotificationDispatcher {
   void addObserver(
     Object observer, {
     required String name,
-    required NotificationCallback callback,
+    required NotificationCallback onMessageReceived,
   }) {
     if (_observers.containsKey(observer)) {
-      _observers[observer]!.addAll({name: callback});
+      _observers[observer]!.addAll({name: onMessageReceived});
       return;
     }
 
-    _observers[observer] = {name: callback};
+    _observers[observer] = {name: onMessageReceived};
   }
 
   /// {@template NotificationDispatcher.removeObserver}
@@ -53,10 +53,10 @@ final class NotificationDispatcher {
   /// {@endtemplate}
   void post({
     required String name,
-    NotificationMessage? info,
+    NotificationMessage? message,
   }) {
     for (final callback in _observers.values.toList()) {
-      callback[name]?.call(info);
+      callback[name]?.call(message);
     }
 
     return;

@@ -14,6 +14,8 @@
 ### Breaking
 - Removed `NotificationDispatcher.observers`.
 - Removed `NotificationMessage` in favour of a simple `Map<String, dynamic>`.
+- Renamed `callback` to `onMessageReceived` in `NotificationDispatcher.addObserver`.
+- Renamed `info` to `message` in `NotificationDispatcher.post`.
 
 ### Documentation
 - Tidied up documentation.
