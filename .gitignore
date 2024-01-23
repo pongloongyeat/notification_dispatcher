@@ -12,5 +12,8 @@ build/
 # Directory created by dartdoc
 doc/api/
 
+# fvm
+.fvm/
+
 # VSCode
 .vscode/

@@ -7,10 +7,6 @@ class TestHelper {
   final String name;
 }
 
-extension on NotificationDispatcher {
-  void clearAll() => observers.clear();
-}
-
 void main() {
   group('NotificationDispatcher', () {
     final instance = TestHelper('1');

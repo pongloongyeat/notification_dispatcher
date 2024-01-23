@@ -1,4 +1,5 @@
 <!--
+## Version
 ### Breaking
 ### Features
 ### Fixes
@@ -8,12 +9,20 @@
 ### Others
 -->
 
+## 0.5.0
+
+### Breaking
+- Removed `NotificationDispatcher.observers`.
+
+### Documentation
+- Tidied up documentation.
+
 ## 0.4.0
 
 ### Breaking
 - Removed support for [Equatable](https://pub.dev/packages/equatable).
 - Removed support for `Future`-based callbacks.
-- Removed `MockNotificationDispatcher`
+- Removed `MockNotificationDispatcher`.
 - `remove` has been renamed to `removeObserverWith` with the `Object observer` parameter made positional.
 
 ### Documentation
