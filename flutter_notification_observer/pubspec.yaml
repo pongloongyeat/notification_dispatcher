@@ -1,0 +1,17 @@
+name: flutter_notification_observer
+description: A new Flutter project.
+version: 0.1.0
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  notification_dispatcher:
+    path: ../notification_dispatcher
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
