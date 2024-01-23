@@ -13,6 +13,7 @@
 
 ### Breaking
 - Removed `NotificationDispatcher.observers`.
+- Removed `NotificationMessage` in favour of a simple `Map<String, dynamic>`.
 
 ### Documentation
 - Tidied up documentation.

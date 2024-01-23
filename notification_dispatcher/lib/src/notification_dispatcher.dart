@@ -1,7 +1,5 @@
 import 'typedefs.dart';
 
-part 'notification_message.dart';
-
 /// Passes notifications around to registered observers. The class comes with a
 /// default instance named [NotificationDispatcher.instance].
 final class NotificationDispatcher {
@@ -54,12 +52,11 @@ final class NotificationDispatcher {
   /// running all callbacks registered with [name].
   /// {@endtemplate}
   void post({
-    Object? sender,
     required String name,
-    Map<String, dynamic>? info,
+    NotificationMessage? info,
   }) {
     for (final callback in _observers.values.toList()) {
-      callback[name]?.call(NotificationMessage._(sender: sender, info: info));
+      callback[name]?.call(info);
     }
 
     return;
