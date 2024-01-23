@@ -144,7 +144,7 @@ void main() {
         ..addObserver(
           instance,
           name: observerName,
-          callback: (message) => callCount = message.info!['callCount'] as int,
+          callback: (message) => callCount = message!['callCount'] as int,
         )
         ..post(name: observerName, info: {'callCount': 1});
 
